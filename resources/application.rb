@@ -35,6 +35,13 @@ action :up do
   end
 end
 
+action :create do
+  execute "running docker-compose create for project #{project_name}" do
+    command "docker-compose #{get_compose_params} create #{get_up_params}"
+    user 'root'
+    group 'root'
+  end
+end
 
 action :down do
   execute "running docker-compose down for project #{project_name}" do
