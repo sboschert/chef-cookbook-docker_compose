@@ -4,4 +4,4 @@
 #
 # Copyright (c) 2016 Sebastian Boschert, All Rights Reserved.
 
-include_recipe 'docker_compose::default'
+include_recipe 'docker_compose::installation'
