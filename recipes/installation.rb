@@ -18,6 +18,10 @@ package 'curl' do
   action :install
 end
 
+group 'docker' do
+  action :create
+end
+
 directory '/etc/docker-compose' do
   action :create
   owner 'root'
