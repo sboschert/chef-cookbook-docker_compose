@@ -28,8 +28,8 @@ end
 execute 'install docker-compose' do
   action :run
   command "curl -sSL #{install_url} > #{command_path} && chmod +x #{command_path}"
-  creates command_path
   user 'root'
   group 'docker'
   umask '0027'
+  not_if "#{command_path} | grep #{node['docker_compose']['release']}"
 end
