@@ -31,5 +31,5 @@ execute 'install docker-compose' do
   user 'root'
   group 'docker'
   umask '0027'
-  not_if "#{command_path} | grep #{node['docker_compose']['release']}"
+  not_if "#{command_path} --version | grep #{node['docker_compose']['release']}"
 end
