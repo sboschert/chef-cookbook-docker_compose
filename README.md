@@ -123,6 +123,10 @@ end
   Equivalent to calling `docker-compose down` with the Compose files 
   that were specified using the `compose_files` parameter.
 
+- `:create` - Create containers for a service.
+  Equivalent to calling `docker-compose create` with the Compose files 
+  that were specified using the `compose_files` parameter.
+
 
 ## License & Authors
 
