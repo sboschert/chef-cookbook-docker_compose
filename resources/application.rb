@@ -7,13 +7,14 @@
 property :project_name, kind_of: String, name_property: true
 property :compose_files, kind_of: Array, required: true
 property :remove_orphans, kind_of: [TrueClass, FalseClass], default: false
+property :ignore_pull_failures, kind_of: [TrueClass, FalseClass], default: false
 property :services, kind_of: Array, default: []
 
 default_action :up
 
 def get_compose_params
-  "-p #{project_name}" +
-      ' -f ' + compose_files.join(' -f ')
+  "-p #{project_name}" \
+    ' -f ' + compose_files.join(' -f ')
 end
 
 def get_up_params
@@ -27,7 +28,11 @@ end
 
 def get_down_params
   (remove_orphans ? ' --remove-orphans' : '') +
-  (services.nil? ? '' : ' ' + services.join(' '))
+    (services.nil? ? '' : ' ' + services.join(' '))
+end
+
+def get_pull_params
+  (ignore_pull_failures ? ' --ignore-pull-failures' : '')
 end
 
 action :up do
@@ -62,6 +67,14 @@ action :down do
     command "docker-compose #{get_compose_params} down  #{get_down_params}"
     environment('PATH' => '/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin')
     not_if "[ $(docker-compose -f #{compose_files.join(' -f ')} ps -q | wc -l) -eq 0 ]"
+    user 'root'
+    group 'root'
+  end
+end
+
+action :pull do
+  execute "running docker-compose pull for project #{project_name}" do
+    command "docker-compose #{get_compose_params} pull  #{get_pull_params}"
     user 'root'
     group 'root'
   end
