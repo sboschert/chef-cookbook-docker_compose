@@ -14,7 +14,7 @@ Docker.
 ## Usage
 
 Place a dependency on the docker-compose cookbook in your cookbook's
-metadata.rb 
+metadata.rb
 
 ```ruby
 depends 'docker_compose', '~> 0.0'
@@ -81,7 +81,7 @@ via the `node['docker_compose']['command_path']` attribute.
 
 
 ## Resources
- 
+
 ### docker_compose_application
 
 The `docker_compose_application` provisions a Docker application (that usually
@@ -106,25 +106,28 @@ end
 - `compose_files` - The list of Compose files that makes up the Docker Compose
  application. The specified file names are passed to the `docker-compose`
  command in the order in which they appear in the list.
- 
+
 - `services` - The list of services to start or stop.
  Defaults to all services that are specified in the Compose files.
- 
+
 - `remove_orphans` - Remove containers for services not defined in the
  Compose file.
- 
+
 #### Actions
 
 - `:up` - Create and start containers.
-  Equivalent to calling `docker-compose up` with the Compose files 
-  that were specified using the `compose_files` parameter.
- 
-- `:down` - Stop and remove containers, networks, images, and volumes.
-  Equivalent to calling `docker-compose down` with the Compose files 
+  Equivalent to calling `docker-compose up -d --build` with the Compose files
   that were specified using the `compose_files` parameter.
 
+- `:down` - Stop and remove containers and networks.
+  Equivalent to calling `docker-compose down` with the Compose files
+  that were specified using the `compose_files` parameter.
+
+- `:restart` - Calls down and up actions.
+  Useful for notications from changes to Dockerfiles and Compose files.
+
 - `:create` - Create containers for a service.
-  Equivalent to calling `docker-compose create` with the Compose files 
+  Equivalent to calling `docker-compose create` with the Compose files
   that were specified using the `compose_files` parameter.
 
 

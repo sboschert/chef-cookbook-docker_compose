@@ -1,0 +1,3 @@
+FROM nginx
+
+COPY Dockerfile /

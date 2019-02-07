@@ -1,0 +1,6 @@
+version: '2'
+services:
+  web_server:
+    build: ./nginx_custom
+    ports:
+      - "8991:80"

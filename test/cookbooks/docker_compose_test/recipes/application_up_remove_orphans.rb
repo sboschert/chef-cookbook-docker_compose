@@ -10,7 +10,7 @@ cookbook_file '/etc/docker-compose/docker-compose_remove_orphans_1.yml' do
   owner 'root'
   group 'root'
   mode 0640
-  notifies :up, 'docker_compose_application[nginx]', :delayed
+  notifies :up, 'docker_compose_application[removeorphans1]', :delayed
 end
 
 cookbook_file '/etc/docker-compose/docker-compose_remove_orphans_2.yml' do
@@ -19,7 +19,7 @@ cookbook_file '/etc/docker-compose/docker-compose_remove_orphans_2.yml' do
   owner 'root'
   group 'root'
   mode 0640
-  notifies :up, 'docker_compose_application[nginx]', :delayed
+  notifies :up, 'docker_compose_application[removeorphans2]', :delayed
 end
 
 docker_compose_application 'removeorphans1' do
