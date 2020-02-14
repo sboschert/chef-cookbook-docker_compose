@@ -11,22 +11,24 @@ property :services, kind_of: Array, default: []
 
 default_action :up
 
-def get_compose_params
-  "-p #{project_name}" +
-      ' -f ' + compose_files.join(' -f ')
-end
+action_class do
+  def get_compose_params
+    "-p #{project_name}" +
+        ' -f ' + compose_files.join(' -f ')
+  end
 
-def get_up_params
-  # '--build' is ignored if there is nothing in the compose file that uses it and
-  #   will result in no image changes if nothing in the Dockerfile's layers have
-  #   changed
-  '-d --build' +
-    (remove_orphans ? ' --remove-orphans' : '') +
-    (services.nil? ? '' : ' ' + services.join(' '))
-end
+  def get_up_params
+    # '--build' is ignored if there is nothing in the compose file that uses it and
+    #   will result in no image changes if nothing in the Dockerfile's layers have
+    #   changed
+    '-d --build' +
+      (remove_orphans ? ' --remove-orphans' : '') +
+      (services.nil? ? '' : ' ' + services.join(' '))
+  end
 
-def get_down_params
-  (remove_orphans ? ' --remove-orphans' : '')
+  def get_down_params
+    (remove_orphans ? ' --remove-orphans' : '')
+  end
 end
 
 action :up do
