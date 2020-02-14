@@ -26,8 +26,7 @@ def get_up_params
 end
 
 def get_down_params
-  (remove_orphans ? ' --remove-orphans' : '') +
-  (services.nil? ? '' : ' ' + services.join(' '))
+  (remove_orphans ? ' --remove-orphans' : '')
 end
 
 action :up do
