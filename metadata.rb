@@ -7,7 +7,7 @@ long_description 'Installs docker_compose and provides the docker_compose_applic
 chef_version '>= 12'
 source_url 'https://github.com/sboschert/chef-cookbook-docker_compose'
 issues_url 'https://github.com/sboschert/chef-cookbook-docker_compose/issues'
-version '0.1.2'
+version '0.1.3'
 
 supports 'debian'
 supports 'ubuntu'
