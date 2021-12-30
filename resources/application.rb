@@ -8,12 +8,14 @@ property :project_name, kind_of: String, name_property: true
 property :compose_files, kind_of: Array, required: true
 property :remove_orphans, kind_of: [TrueClass, FalseClass], default: false
 property :services, kind_of: Array, default: []
+property :env_file, kind_of: String
 
 default_action :up
 
 def get_compose_params
   "-p #{project_name}" +
-      ' -f ' + compose_files.join(' -f ')
+    ' -f ' + compose_files.join(' -f ') +
+    (env_file.nil? ? '' : ' --env-file=' + env_file)
 end
 
 def get_up_params
@@ -33,6 +35,7 @@ end
 action :up do
   project_name = new_resource.project_name || current_resource.project_name
   compose_files = new_resource.compose_files || current_resource.compose_files
+  env_file = new_resource.env_file
 
   execute "running docker-compose up for project #{project_name}" do
     command "docker-compose #{get_compose_params} up #{get_up_params}"
@@ -45,6 +48,7 @@ end
 
 action :create do
   project_name = new_resource.project_name || current_resource.project_name
+  env_file = new_resource.env_file
 
   execute "running docker-compose create for project #{project_name}" do
     command "docker-compose #{get_compose_params} create #{get_up_params}"
@@ -57,6 +61,7 @@ end
 action :down do
   project_name = new_resource.project_name || current_resource.project_name
   compose_files = new_resource.compose_files || current_resource.compose_files
+  env_file = new_resource.env_file
 
   execute "running docker-compose down for project #{project_name}" do
     command "docker-compose #{get_compose_params} down  #{get_down_params}"
